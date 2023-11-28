@@ -25,8 +25,15 @@ async function run() {
     app.post("/coffee", async (req, res) => {
       const coffeData = req.body;
       const insertCoffe = await coffeCollections.insertOne(coffeData);
-      console.log(insertCoffe);
+      //   console.log(insertCoffe);
       res.send(insertCoffe);
+    });
+    // read
+    app.get("/coffee", async (req, res) => {
+      const filter = {};
+      const coffeeData = await coffeCollections.find(filter).toArray();
+      //   console.log(coffeeData);
+      res.send(coffeeData);
     });
     // console.log(
     //   "Pinged your deployment. You successfully connected to MongoDB!"
