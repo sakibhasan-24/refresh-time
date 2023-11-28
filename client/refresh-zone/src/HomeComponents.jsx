@@ -1,5 +1,10 @@
 import React from "react";
+import Banner from "./Banner";
 
 export default function HomeComponents() {
-  return <div>HomeComponents</div>;
+  return (
+    <div>
+      <Banner />
+    </div>
+  );
 }
