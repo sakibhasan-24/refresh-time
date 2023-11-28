@@ -25,7 +25,10 @@ export default function Coffee({ coffee }) {
         <Link className="text-red-600 font-bold text-4xl" to="">
           X
         </Link>
-        <Link className="text-green-600 font-bold text-2xl" to="">
+        <Link
+          to={`/coffee/${coffee._id}`}
+          className="text-green-600 font-bold text-2xl"
+        >
           Details
         </Link>
         <Link className="text-yellow-600 font-bold text-2xl" to="">

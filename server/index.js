@@ -4,7 +4,7 @@ const app = express();
 require("dotenv").config();
 const port = 3000;
 
-const { MongoClient, ServerApiVersion } = require("mongodb");
+const { MongoClient, ServerApiVersion, ObjectId } = require("mongodb");
 const uri = `mongodb+srv://refresh-time:${process.env.MONGO_PASSWORD}@intelligent-users.wlfdec9.mongodb.net/?retryWrites=true&w=majority`;
 app.use(express.json());
 app.use(cors());
@@ -32,8 +32,15 @@ async function run() {
     app.get("/coffee", async (req, res) => {
       const filter = {};
       const coffeeData = await coffeCollections.find(filter).toArray();
-      //   console.log(coffeeData);
+      console.log(coffeeData);
       res.send(coffeeData);
+    });
+    app.get("/coffee/:id", async (req, res) => {
+      const id = req.params.id;
+      const filter = { _id: new ObjectId(id) };
+      const singleCoffee = await coffeCollections.findOne(filter);
+      console.log(singleCoffee);
+      res.send(singleCoffee);
     });
     // console.log(
     //   "Pinged your deployment. You successfully connected to MongoDB!"
