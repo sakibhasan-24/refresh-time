@@ -42,6 +42,13 @@ async function run() {
       console.log(singleCoffee);
       res.send(singleCoffee);
     });
+    // delete
+    app.delete("/coffee/:id", async (req, res) => {
+      const id = req.params.id;
+      const filter = { _id: new ObjectId(id) };
+      const deletedCoffee = await coffeCollections.deleteOne(filter);
+      res.send(deletedCoffee);
+    });
     // console.log(
     //   "Pinged your deployment. You successfully connected to MongoDB!"
     // );

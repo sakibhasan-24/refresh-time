@@ -1,7 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
 
-export default function Coffee({ coffee }) {
+export default function Coffee({ coffee, deleteCoffee }) {
   const {
     name,
     chef,
@@ -22,7 +22,11 @@ export default function Coffee({ coffee }) {
         <p>category: {category}</p>
       </div>
       <div className="col-span-1 flex flex-col items-center justify-center ">
-        <Link className="text-red-600 font-bold text-4xl" to="">
+        <Link
+          onClick={() => deleteCoffee(coffee._id)}
+          className="text-red-600 font-bold text-4xl"
+          to=""
+        >
           X
         </Link>
         <Link
