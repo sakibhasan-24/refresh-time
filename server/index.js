@@ -32,16 +32,79 @@ async function run() {
     app.get("/coffee", async (req, res) => {
       const filter = {};
       const coffeeData = await coffeCollections.find(filter).toArray();
-      console.log(coffeeData);
+      //   console.log(coffeeData);
       res.send(coffeeData);
     });
     app.get("/coffee/:id", async (req, res) => {
       const id = req.params.id;
       const filter = { _id: new ObjectId(id) };
       const singleCoffee = await coffeCollections.findOne(filter);
-      console.log(singleCoffee);
+      //   console.log(singleCoffee);
       res.send(singleCoffee);
     });
+    app.put("/coffee/edit/:id", async (req, res) => {
+      const id = req.params.id;
+      console.log(id);
+      const filter = { _id: new ObjectId(id) };
+      const options = { upsert: true };
+      const updatedCoffee = req.body;
+      console.log(updatedCoffee);
+
+      const coffee = {
+        $set: {
+          name: updatedCoffee.name,
+          supplier: updatedCoffee.supplier,
+          taste: updatedCoffee.taste,
+          category: updatedCoffee.category,
+          details: updatedCoffee.details,
+          photo: updatedCoffee.photo,
+          chef: updatedCoffee.chef,
+        },
+      };
+
+      try {
+        const result = await coffeCollections.updateOne(
+          filter,
+          coffee,
+          options
+        );
+        res.send(result);
+      } catch (error) {
+        console.error("Error updating coffee:", error);
+        res.status(500).send("Internal Server Error");
+      }
+    });
+
+    // app.put("/coffee/edit/:id", async (req, res) => {
+    //   const id = req.params.id;
+    //   console.log(id);
+    //   const filter = { _id: new ObjectId(id) };
+    //   const options = { upsert: true };
+    //   const updatedCoffee = req.body;
+    //   res.send(updatedCoffee);
+    //   console.log(updatedCoffee);
+    //   const coffee = {
+    //     $set: {
+    //       name: updatedCoffee.name,
+    //       supplier: updatedCoffee.supplier,
+    //       taste: updatedCoffee.taste,
+    //       category: updatedCoffee.category,
+    //       details: updatedCoffee.details,
+    //       photo: updatedCoffee.photo,
+    //       chef: updatedCoffee.chef,
+    //     },
+    //   };
+    //   try {
+    //     const result = await coffeCollections.updateOne(
+    //       filter,
+    //       coffee,
+    //       options
+    //     );
+    //     res.send(result);
+    //   } catch (error) {
+    //     res.send(error);
+    //   }
+    // });
     // delete
     app.delete("/coffee/:id", async (req, res) => {
       const id = req.params.id;

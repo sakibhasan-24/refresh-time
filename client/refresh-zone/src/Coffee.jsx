@@ -35,7 +35,10 @@ export default function Coffee({ coffee, deleteCoffee }) {
         >
           Details
         </Link>
-        <Link className="text-yellow-600 font-bold text-2xl" to="">
+        <Link
+          to={`/coffee/edit/${coffee._id}`}
+          className="text-yellow-600 font-bold text-2xl"
+        >
           Edit
         </Link>
       </div>
