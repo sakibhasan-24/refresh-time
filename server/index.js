@@ -1,11 +1,13 @@
 const express = require("express");
+const cors = require("cors");
 const app = express();
 require("dotenv").config();
 const port = 3000;
 
 const { MongoClient, ServerApiVersion } = require("mongodb");
 const uri = `mongodb+srv://refresh-time:${process.env.MONGO_PASSWORD}@intelligent-users.wlfdec9.mongodb.net/?retryWrites=true&w=majority`;
-
+app.use(express.json());
+app.use(cors());
 // Create a MongoClient with a MongoClientOptions object to set the Stable API version
 const client = new MongoClient(uri, {
   serverApi: {
@@ -16,12 +18,19 @@ const client = new MongoClient(uri, {
 });
 
 async function run() {
+  const coffeCollections = client.db("coffelist").collection("coffee");
   try {
     await client.connect();
 
-    console.log(
-      "Pinged your deployment. You successfully connected to MongoDB!"
-    );
+    app.post("/coffee", async (req, res) => {
+      const coffeData = req.body;
+      const insertCoffe = await coffeCollections.insertOne(coffeData);
+      console.log(insertCoffe);
+      res.send(insertCoffe);
+    });
+    // console.log(
+    //   "Pinged your deployment. You successfully connected to MongoDB!"
+    // );
   } finally {
   }
 }

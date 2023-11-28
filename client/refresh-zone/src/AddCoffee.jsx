@@ -1,6 +1,23 @@
-import React from "react";
+import React, { useState } from "react";
 
 export default function AddCoffee() {
+  const [formData, setFormData] = useState({});
+  const formDataHandle = (e) => {
+    e.preventDefault();
+    setFormData((prev) => ({ ...prev, [e.target.id]: e.target.value }));
+  };
+  const submitFormData = (e) => {
+    e.preventDefault();
+    fetch("http://localhost:3000/coffee", {
+      method: "POST",
+      headers: {
+        "content-type": "application/json",
+      },
+      body: JSON.stringify(formData),
+    })
+      .then((res) => res.json())
+      .then((data) => console.log(data));
+  };
   return (
     <div className="max-w-4xl mx-auto bg-amber-200 px-4 py-2 shadow-xl rounded-lg">
       <h1 className="font-bold text-center my-6 text-5xl">Add A NEW COFFEE</h1>
@@ -10,11 +27,12 @@ export default function AddCoffee() {
         using Lorem Ipsum is that it has a more-or-less normal distribution of
         letters, as opposed to using Content here.
       </p>
-      <form className="space-y-6">
+      <form onSubmit={submitFormData} className="space-y-6">
         <div className="flex items-center  max-w-3xl mx-auto gap-2 ">
           <h1 className="flex flex-col w-full">
             Name:{" "}
             <input
+              onChange={formDataHandle}
               className="w-full rounded-md px-4 py-2"
               type="text"
               id="name"
@@ -24,6 +42,7 @@ export default function AddCoffee() {
           <h1 className="flex flex-col w-full">
             Chef:{" "}
             <input
+              onChange={formDataHandle}
               className="w-full rounded-md px-4 py-2"
               type="text"
               id="Chef"
@@ -35,6 +54,7 @@ export default function AddCoffee() {
           <h1 className="flex flex-col w-full">
             Supplier:{" "}
             <input
+              onChange={formDataHandle}
               className="w-full rounded-md px-4 py-2"
               type="text"
               id="supplier"
@@ -44,6 +64,7 @@ export default function AddCoffee() {
           <h1 className="flex flex-col w-full">
             taste:{" "}
             <input
+              onChange={formDataHandle}
               className="w-full rounded-md px-4 py-2"
               type="text"
               id="Taste"
@@ -55,6 +76,7 @@ export default function AddCoffee() {
           <h1 className="flex flex-col w-full">
             Category:{" "}
             <input
+              onChange={formDataHandle}
               className="w-full rounded-md px-4 py-2"
               type="text"
               id="category"
@@ -64,6 +86,7 @@ export default function AddCoffee() {
           <h1 className="flex flex-col w-full">
             details:{" "}
             <input
+              onChange={formDataHandle}
               className="w-full rounded-md px-4 py-2"
               type="text"
               id="details"
@@ -75,6 +98,7 @@ export default function AddCoffee() {
           <h1 className="flex flex-col w-full">
             Category:{" "}
             <input
+              onChange={formDataHandle}
               className="w-full rounded-md px-4 py-2"
               type="text"
               id="photo"
