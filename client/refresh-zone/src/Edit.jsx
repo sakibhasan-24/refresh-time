@@ -2,9 +2,9 @@ import React, { useState } from "react";
 import { useLoaderData, useNavigate } from "react-router-dom";
 
 export default function Edit() {
-  const [formData, setFormData] = useState({});
   const navigate = useNavigate();
   const coffee = useLoaderData();
+  const [formData, setFormData] = useState(coffee);
   const {
     name,
     chef,
@@ -22,6 +22,7 @@ export default function Edit() {
   const submitFormData = (e) => {
     e.preventDefault();
     // /coffee/edit/:id
+
     fetch(`http://localhost:3000/coffee/edit/${coffee._id}`, {
       method: "PUT",
       headers: {
@@ -38,6 +39,7 @@ export default function Edit() {
         }
       });
   };
+  console.log(formData);
   return (
     <div className="max-w-4xl mx-auto bg-amber-200 px-4 py-2 shadow-xl rounded-lg">
       <h1 className="font-bold text-center my-6 text-5xl">update {name} </h1>
@@ -62,7 +64,7 @@ export default function Edit() {
               defaultValue={chef}
               className="w-full rounded-md px-4 py-2"
               type="text"
-              id="Chef"
+              id="chef"
               placeholder="coffee chef"
             />{" "}
           </h1>

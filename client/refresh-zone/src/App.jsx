@@ -4,6 +4,7 @@ import Home from "./Home";
 import HomeComponents from "./HomeComponents";
 import CoffeeDetails from "./CoffeeDetails";
 import Edit from "./Edit";
+import SignUp from "./SignUp";
 
 export default function App() {
   const router = createBrowserRouter([
@@ -12,6 +13,7 @@ export default function App() {
       element: <Home />,
       children: [{ path: "/", element: <HomeComponents /> }],
     },
+    { path: "/signup", element: <SignUp /> },
     {
       path: "coffee/edit/:id",
       element: <Edit />,
