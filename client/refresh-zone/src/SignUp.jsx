@@ -7,12 +7,20 @@ export default function SignUp() {
     e.preventDefault();
     const email = e.target.email.value;
     const password = e.target.password.value;
+    const user = { email };
     console.log(email, password);
     createUser(email, password)
-      .then((data) => {
-        console.log(data.user);
-      })
+      .then((data) => {})
       .catch((e) => console.log(e));
+    fetch("http://localhost:3000/users", {
+      method: "POST",
+      headers: {
+        "content-type": "application/json",
+      },
+      body: JSON.stringify(user),
+    })
+      .then((res) => res.json())
+      .then((data) => console.log(data));
   };
   return (
     <div className="max-w-4xl mx-auto">
